@@ -1,0 +1,78 @@
+
+{% extends "detector/base.html" %}
+
+{% block title %}Alert Investigation{% endblock %}
+
+{% block content %}
+<a href="{% url 'alerts' %}" class="muted">← Back to alerts</a>
+
+<div class="panel p-4 mt-3 mb-4">
+    <div class="d-flex flex-wrap justify-content-between gap-2">
+        <div>
+            <h2 class="fw-bold">{{ alert.title }}</h2>
+            <p class="muted">{{ alert.description }}</p>
+        </div>
+        <div>
+            <span class="badge
+                {% if alert.severity == 'critical' or alert.severity == 'high' %}
+                    text-bg-danger
+                {% elif alert.severity == 'medium' %}
+                    text-bg-warning
+                {% else %}
+                    text-bg-secondary
+                {% endif %}">
+                {{ alert.get_severity_display }}
+            </span>
+        </div>
+    </div>
+
+    <hr class="border-secondary">
+
+    <p><strong>Detection rule:</strong> {{ alert.rule_name }}</p>
+    <p><strong>Source IP:</strong> {{ alert.source_ip|default:"Unknown" }}</p>
+    <p><strong>Status:</strong> {{ alert.get_status_display }}</p>
+    <p><strong>Created:</strong> {{ alert.created_at|date:"Y-m-d H:i:s" }}</p>
+</div>
+
+<div class="panel p-4 mb-4">
+    <h5 class="fw-bold">Evidence</h5>
+    <pre class="text-info text-wrap"><code>{{ alert.evidence }}</code></pre>
+</div>
+
+{% if alert.event %}
+<div class="panel p-4 mb-4">
+    <h5 class="fw-bold">Associated event</h5>
+    <p><strong>Timestamp:</strong> {{ alert.event.timestamp }}</p>
+    <p><strong>Source:</strong> {{ alert.event.src_ip|default:"Unknown" }}</p>
+    <p><strong>Destination:</strong> {{ alert.event.dst_ip|default:"Unknown" }}</p>
+    <p><strong>Message:</strong> {{ alert.event.message|default:"No message" }}</p>
+</div>
+{% endif %}
+
+<div class="panel p-4">
+    <h5 class="fw-bold mb-3">Analyst investigation</h5>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <label class="form-label">Alert status</label>
+        <select name="status" class="form-select mb-3">
+            {% for value, label in status_choices %}
+            <option value="{{ value }}"
+                {% if alert.status == value %}selected{% endif %}>
+                {{ label }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label class="form-label">Analyst notes</label>
+        <textarea name="analyst_notes" class="form-control mb-3"
+                  rows="5"
+                  placeholder="Record investigation findings and next steps...">{{ alert.analyst_notes }}</textarea>
+
+        <button class="btn btn-primary" type="submit">
+            Save investigation
+        </button>
+    </form>
+</div>
+{% endblock %}

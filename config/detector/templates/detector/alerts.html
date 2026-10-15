@@ -1,0 +1,154 @@
+
+{% extends "detector/base.html" %}
+
+{% block title %}Security Alerts | Sentinel SOC{% endblock %}
+
+{% block content %}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <div>
+        <div class="small text-uppercase muted mb-1">Incident management</div>
+        <h2 class="fw-bold mb-1">Security Alerts</h2>
+        <p class="muted mb-0">Filter, prioritize, and investigate detected activity.</p>
+    </div>
+    <a href="{% url 'dashboard' %}" class="btn btn-outline-light">
+        ← Dashboard
+    </a>
+</div>
+
+<!-- Alert filters -->
+<div class="panel p-4 mb-4">
+    <h5 class="fw-bold mb-3">Filter alerts</h5>
+
+    <form method="get" action="{% url 'alerts' %}">
+        <div class="row g-3 align-items-end">
+
+            <div class="col-12 col-md-4">
+                <label class="form-label" for="severity">Severity</label>
+                <select id="severity" name="severity" class="form-select">
+                    <option value="">All severities</option>
+                    {% for value, label in severity_choices %}
+                    <option value="{{ value }}"
+                        {% if selected_severity == value %}selected{% endif %}>
+                        {{ label }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <label class="form-label" for="status">Status</label>
+                <select id="status" name="status" class="form-select">
+                    <option value="">All statuses</option>
+                    {% for value, label in status_choices %}
+                    <option value="{{ value }}"
+                        {% if selected_status == value %}selected{% endif %}>
+                        {{ label }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <label class="form-label" for="rule">Detection rule</label>
+                <select id="rule" name="rule" class="form-select">
+                    <option value="">All detection rules</option>
+                    {% for rule in rule_choices %}
+                    <option value="{{ rule }}"
+                        {% if selected_rule == rule %}selected{% endif %}>
+                        {{ rule }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-12 d-flex flex-wrap gap-2">
+                <button class="btn btn-primary" type="submit">
+                    Apply filters
+                </button>
+                <a class="btn btn-outline-light" href="{% url 'alerts' %}">
+                    Clear filters
+                </a>
+                <a
+    href="{% url 'export_alerts_csv' %}?{{ request.GET.urlencode }}"
+    class="btn btn-outline-info"
+>
+    Export CSV
+</a>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<!-- Results -->
+<div class="panel p-3 p-md-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <div>
+            <h5 class="fw-bold mb-1">Alert queue</h5>
+            <p class="muted small mb-0">
+                {{ alerts|length }} alert{{ alerts|length|pluralize }} matching your filters
+            </p>
+        </div>
+        <span class="status-indicator">Newest first</span>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Detection</th>
+                    <th>Rule</th>
+                    <th>Severity</th>
+                    <th>Source IP</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for alert in alerts %}
+                <tr>
+                    <td>
+                        <a class="alert-title"
+                           href="{% url 'alert_detail' alert.id %}">
+                            {{ alert.title }}
+                        </a>
+                        <div class="muted small">ID: {{ alert.id }}</div>
+                    </td>
+                    <td>
+                        <code>{{ alert.rule_name|default:"Unclassified" }}</code>
+                    </td>
+                    <td>
+                        <span class="severity-badge severity-{{ alert.severity }}">
+                            {{ alert.get_severity_display }}
+                        </span>
+                    </td>
+                    <td>
+                        <code>{{ alert.source_ip|default:"Unknown" }}</code>
+                    </td>
+                    <td>
+                        <span class="status-text">
+                            {{ alert.get_status_display }}
+                        </span>
+                    </td>
+                    <td class="muted small">
+                        {{ alert.created_at|date:"Y-m-d H:i" }}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center muted py-5">
+                        <div class="fs-3 mb-2">⌕</div>
+                        <strong>No matching alerts</strong>
+                        <div class="small mt-1">
+                            Try different filters or clear the current selection.
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

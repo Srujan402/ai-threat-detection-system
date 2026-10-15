@@ -1,0 +1,60 @@
+{
+  "dataset": "cic_ids2017_prepared.csv",
+  "model_type": "RandomForestClassifier",
+  "rows_used": 100000,
+  "training_rows": 75000,
+  "test_rows": 25000,
+  "features": [
+    "flow_duration",
+    "bytes_in",
+    "bytes_out",
+    "packets",
+    "dst_port"
+  ],
+  "test_class_counts": {
+    "benign": 12500,
+    "attack": 12500
+  },
+  "confusion_matrix_labels": [
+    "benign",
+    "attack"
+  ],
+  "confusion_matrix": [
+    [
+      12500,
+      0
+    ],
+    [
+      3,
+      12497
+    ]
+  ],
+  "classification_report": {
+    "benign": {
+      "precision": 0.9997600575861794,
+      "recall": 1.0,
+      "f1-score": 0.9998800143982722,
+      "support": 12500.0
+    },
+    "attack": {
+      "precision": 1.0,
+      "recall": 0.99976,
+      "f1-score": 0.9998799855982718,
+      "support": 12500.0
+    },
+    "accuracy": 0.99988,
+    "macro avg": {
+      "precision": 0.9998800287930897,
+      "recall": 0.99988,
+      "f1-score": 0.999879999998272,
+      "support": 25000.0
+    },
+    "weighted avg": {
+      "precision": 0.9998800287930897,
+      "recall": 0.99988,
+      "f1-score": 0.9998799999982722,
+      "support": 25000.0
+    }
+  },
+  "warning": "Experimental results on the prepared CIC-IDS2017 subset. The subset uses five mapped features and is not a production validation. Results may not generalize to other networks."
+}

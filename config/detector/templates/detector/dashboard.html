@@ -1,0 +1,206 @@
+
+{% extends "detector/base.html" %}
+
+{% block title %}SOC Dashboard | Sentinel{% endblock %}
+
+{% block content %}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <div>
+        <div class="small text-uppercase muted mb-1">Security monitoring</div>
+        <h2 class="fw-bold mb-1">SOC Dashboard</h2>
+        <p class="muted mb-0">Network and system threat detection overview</p>
+    </div>
+    <div class="d-flex gap-2">
+        <a href="{% url 'alerts' %}" class="btn btn-outline-light">
+            <span aria-hidden="true">◉</span> View alerts
+        </a>
+    </div>
+</div>
+
+<!-- Summary cards -->
+<div class="row g-3 mb-4">
+    {% for card in stat_cards %}
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="panel metric-card metric-{{ card.color }} p-3 h-100">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="muted small mb-2">{{ card.label }}</div>
+                    <div class="metric-number">{{ card.value }}</div>
+                </div>
+                <div class="metric-icon" aria-hidden="true">
+                    {% if card.color == "blue" %}⌁
+                    {% elif card.color == "purple" %}⬡
+                    {% elif card.color == "orange" %}◷
+                    {% else %}⚠{% endif %}
+                </div>
+            </div>
+            <div class="small muted mt-3">Current database total</div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Severity distribution -->
+<div class="row g-3 mb-4">
+    <div class="col-12 col-lg-7">
+        <div class="panel p-4 h-100">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h5 class="fw-bold mb-1">Alert severity distribution</h5>
+                    <p class="muted small mb-0">Breakdown of recorded alerts</p>
+                </div>
+                <span class="status-indicator">All time</span>
+            </div>
+
+            {% for item in severity_chart %}
+            <div class="mb-3">
+                <div class="d-flex justify-content-between small mb-2">
+                    <span>{{ item.label }}</span>
+                    <span class="muted">
+                        {{ item.count }} · {{ item.percentage }}%
+                    </span>
+                </div>
+                <div class="severity-track">
+                    <div class="severity-fill"
+                         style="width: {{ item.percentage }}%; background: {{ item.color }};">
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="muted">No severity data available.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-5">
+        <div class="panel p-4 h-100">
+            <h5 class="fw-bold mb-1">Analyst workspace</h5>
+            <p class="muted small mb-4">Investigate and manage security events.</p>
+
+            <a href="{% url 'alerts' %}" class="workspace-link mb-3">
+                <span>
+                    <strong>Alert queue</strong>
+                    <small class="muted d-block">Review and filter detections</small>
+                </span>
+                <span aria-hidden="true">→</span>
+            </a>
+
+            <a href="{% url 'dashboard' %}#upload" class="workspace-link mb-3">
+                <span>
+                    <strong>Import security logs</strong>
+                    <small class="muted d-block">Analyze a CSV dataset</small>
+                </span>
+                <span aria-hidden="true">→</span>
+            </a>
+
+            <a href="/admin/" class="workspace-link">
+                <span>
+                    <strong>Database administration</strong>
+                    <small class="muted d-block">Manage stored records</small>
+                </span>
+                <span aria-hidden="true">→</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- CSV upload -->
+<div class="panel p-4 mb-4" id="upload">
+    <div class="mb-3">
+        <h5 class="fw-bold mb-1">Import security data</h5>
+        <p class="muted small mb-0">
+            Upload network flows or system security logs for analysis.
+            Maximum upload size: 20 MB.
+        </p>
+    </div>
+
+    <form method="post" action="{% url 'upload_csv' %}"
+          enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="row g-3 align-items-end">
+            <div class="col-12 col-md-4">
+                <label class="form-label" for="{{ form.data_type.id_for_label }}">
+                    Data type
+                </label>
+                {{ form.data_type }}
+            </div>
+
+            <div class="col-12 col-md-5">
+                <label class="form-label" for="{{ form.csv_file.id_for_label }}">
+                    CSV file
+                </label>
+                {{ form.csv_file }}
+            </div>
+
+            <div class="col-12 col-md-3">
+                <button class="btn btn-primary w-100" type="submit">
+                    Upload and analyze
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Recent alerts -->
+<div class="panel p-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <div>
+            <h5 class="fw-bold mb-1">Recent alerts</h5>
+            <p class="muted small mb-0">Latest recorded detections</p>
+        </div>
+        <a href="{% url 'alerts' %}" class="btn btn-sm btn-outline-light">
+            View all alerts →
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Detection</th>
+                    <th>Severity</th>
+                    <th>Source IP</th>
+                    <th>Status</th>
+                    <th>Detected at</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for alert in recent_alerts %}
+                <tr>
+                    <td>
+                        <a class="alert-title"
+                           href="{% url 'alert_detail' alert.id %}">
+                            {{ alert.title }}
+                        </a>
+                        <div class="muted small">{{ alert.rule_name }}</div>
+                    </td>
+                    <td>
+                        <span class="severity-badge severity-{{ alert.severity }}">
+                            {{ alert.get_severity_display }}
+                        </span>
+                    </td>
+                    <td><code>{{ alert.source_ip|default:"Unknown" }}</code></td>
+                    <td>
+                        <span class="status-text">{{ alert.get_status_display }}</span>
+                    </td>
+                    <td class="muted small">
+                        {{ alert.created_at|date:"Y-m-d H:i" }}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center muted py-5">
+                        <div class="fs-3 mb-2">◉</div>
+                        <strong>No alerts recorded yet</strong>
+                        <div class="small mt-1">Import a sample CSV to start analyzing events.</div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

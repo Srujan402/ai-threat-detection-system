@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Django local files
+db.sqlite3
+*.sqlite3
+.env
+.env.*
+!.env.example
+media/
+staticfiles/
+
+# IDE
+.vscode/
+.idea/
+
+# Large datasets
+data/CIC-IDS2017/
+data/MachineLearning CSV (1).zip
+data/cic_ids2017_prepared.csv
+config/data/
+
+# Generated ML artifacts
+config/artifacts/*.joblib
+
+# OS files
+.DS_Store
+Thumbs.db
