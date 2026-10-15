@@ -29,3 +29,6 @@ config/artifacts/*.joblib
 # OS files
 .DS_Store
 Thumbs.db
+
+data/MachineLearningCSV*.zip
+config/detector/detection_backup.py
