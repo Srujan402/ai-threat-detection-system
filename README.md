@@ -35,16 +35,16 @@ A Django-based cybersecurity portfolio project that combines machine-learning cl
 ```text
 ai-threat-protection/
 +-- config/
-¦   +-- artifacts/
-¦   ¦   +-- evaluation.json
-¦   +-- detector/
-¦   +-- config/
-¦   +-- manage.py
-¦   +-- requirements.txt
+ï¿½   +-- artifacts/
+ï¿½   ï¿½   +-- evaluation.json
+ï¿½   +-- detector/
+ï¿½   +-- config/
+ï¿½   +-- manage.py
+ï¿½   +-- requirements.txt
 +-- data/
-¦   +-- prepare_cic.py
+ï¿½   +-- prepare_cic.py
 +-- detector/
-¦   +-- management/
+ï¿½   +-- management/
 +-- .gitignore
 +-- README.md
 ```
@@ -108,3 +108,13 @@ Potential data leakage, duplicate flows, feature mapping, class balance, false p
 ## Disclaimer
 
 Developed for educational and defensive cybersecurity purposes. Test only with systems and data you are authorized to use.
+## Application Screenshots
+
+### Security Dashboard
+![Security Dashboard](docs/screenshots/dashboard.png)
+
+### Security Alerts
+![Security Alerts](docs/screenshots/alerts.png)
+
+### Alert Details
+![Alert Details](docs/screenshots/alert-details.png)
