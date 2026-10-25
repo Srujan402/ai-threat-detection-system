@@ -30,7 +30,7 @@ The system processes security events and network traffic data from CSV files, ev
 
 ### Alert Details
 
-![Alert Details](docs/screenshots/alert-details.png)
+![Alert Details](docs/screenshots/alert-detail.png)
 
 ## Technology Stack
 
