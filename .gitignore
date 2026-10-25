@@ -32,3 +32,17 @@ Thumbs.db
 
 data/MachineLearningCSV*.zip
 config/detector/detection_backup.py
+
+# All downloaded datasets, archives, and generated data
+data/CIC-IDS2017/
+data/*.zip
+data/*prepared*.csv
+data/*processed*.csv
+
+# Generated model files and experiment outputs
+*.joblib
+*.pkl
+
+# Local logs and temporary files
+*.log
+*.tmp

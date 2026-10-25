@@ -1,0 +1,135 @@
+{
+  "expanded_15_sanitized": {
+    "features": [
+      "flow_duration",
+      "bytes_in",
+      "bytes_out",
+      "packets",
+      "dst_port",
+      "flow_iat_mean",
+      "flow_iat_std",
+      "syn_flag_count",
+      "ack_flag_count",
+      "flow_packets_s",
+      "flow_bytes_s",
+      "fwd_iat_mean",
+      "bwd_iat_mean",
+      "packet_length_mean",
+      "packet_length_std"
+    ],
+    "cap_rates": false,
+    "rate_caps": null,
+    "threshold": 0.28,
+    "validation_metrics": {
+      "threshold": 0.28,
+      "tn": 29703,
+      "fp": 297,
+      "fn": 11825,
+      "tp": 2010,
+      "fpr": 0.0099,
+      "attack_recall": 0.1452837007589447,
+      "attack_precision": 0.871261378413524,
+      "attack_f1": 0.24903977202329328
+    },
+    "test_metrics": {
+      "threshold": 0.28,
+      "tn": 29840,
+      "fp": 160,
+      "fn": 8276,
+      "tp": 21724,
+      "fpr": 0.005333333333333333,
+      "attack_recall": 0.7241333333333333,
+      "attack_precision": 0.9926887223542314,
+      "attack_f1": 0.8374065222419242
+    }
+  },
+  "expanded_15_capped": {
+    "features": [
+      "flow_duration",
+      "bytes_in",
+      "bytes_out",
+      "packets",
+      "dst_port",
+      "flow_iat_mean",
+      "flow_iat_std",
+      "syn_flag_count",
+      "ack_flag_count",
+      "flow_packets_s",
+      "flow_bytes_s",
+      "fwd_iat_mean",
+      "bwd_iat_mean",
+      "packet_length_mean",
+      "packet_length_std"
+    ],
+    "cap_rates": true,
+    "rate_caps": {
+      "flow_packets_s": 2000000.0,
+      "flow_bytes_s": 124000000.0
+    },
+    "threshold": 0.28,
+    "validation_metrics": {
+      "threshold": 0.28,
+      "tn": 29703,
+      "fp": 297,
+      "fn": 11893,
+      "tp": 1942,
+      "fpr": 0.0099,
+      "attack_recall": 0.14036863028550778,
+      "attack_precision": 0.8673514962036624,
+      "attack_f1": 0.24163244991912405
+    },
+    "test_metrics": {
+      "threshold": 0.28,
+      "tn": 29839,
+      "fp": 161,
+      "fn": 8407,
+      "tp": 21593,
+      "fpr": 0.005366666666666666,
+      "attack_recall": 0.7197666666666667,
+      "attack_precision": 0.9925990622414269,
+      "attack_f1": 0.8344475789310971
+    }
+  },
+  "expanded_13_without_rates": {
+    "features": [
+      "flow_duration",
+      "bytes_in",
+      "bytes_out",
+      "packets",
+      "dst_port",
+      "flow_iat_mean",
+      "flow_iat_std",
+      "syn_flag_count",
+      "ack_flag_count",
+      "fwd_iat_mean",
+      "bwd_iat_mean",
+      "packet_length_mean",
+      "packet_length_std"
+    ],
+    "cap_rates": false,
+    "rate_caps": null,
+    "threshold": 0.27,
+    "validation_metrics": {
+      "threshold": 0.27,
+      "tn": 29706,
+      "fp": 294,
+      "fn": 13106,
+      "tp": 729,
+      "fpr": 0.0098,
+      "attack_recall": 0.0526924466931695,
+      "attack_precision": 0.7126099706744868,
+      "attack_f1": 0.098128954098802
+    },
+    "test_metrics": {
+      "threshold": 0.27,
+      "tn": 29858,
+      "fp": 142,
+      "fn": 7798,
+      "tp": 22202,
+      "fpr": 0.004733333333333333,
+      "attack_recall": 0.7400666666666667,
+      "attack_precision": 0.9936448263515932,
+      "attack_f1": 0.8483111722451475
+    }
+  }
+}

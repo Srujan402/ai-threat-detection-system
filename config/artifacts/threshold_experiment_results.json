@@ -1,0 +1,45 @@
+{
+    "experiment": "multifile_threshold_validation",
+    "features": [
+        "flow_duration",
+        "bytes_in",
+        "bytes_out",
+        "packets",
+        "dst_port"
+    ],
+    "training_sources": [
+        "Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv",
+        "Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv",
+        "Friday-WorkingHours-Morning.pcap_ISCX.csv",
+        "Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv"
+    ],
+    "validation_source": "Tuesday-WorkingHours.pcap_ISCX.csv",
+    "test_source": "Wednesday-workingHours.pcap_ISCX.csv",
+    "target_false_positive_rate": 0.01,
+    "selected_threshold": 1.0,
+    "validation_metrics": {
+        "threshold": 1.0,
+        "tn": 29743,
+        "fp": 257,
+        "fn": 13819,
+        "tp": 16,
+        "false_positive_rate": 0.008566666666666667,
+        "attack_recall": 0.0011564871702204554,
+        "accuracy": 0.6788867343447017,
+        "attack_precision": 0.05860805860805861,
+        "attack_f1": 0.0022682166146867026
+    },
+    "test_metrics": {
+        "threshold": 1.0,
+        "tn": 29935,
+        "fp": 65,
+        "fn": 29894,
+        "tp": 106,
+        "false_positive_rate": 0.0021666666666666666,
+        "attack_recall": 0.003533333333333333,
+        "accuracy": 0.5006833333333334,
+        "attack_precision": 0.6198830409356725,
+        "attack_f1": 0.007026614961386762
+    },
+    "warning": "This is an experimental evaluation, not a guarantee of production performance. The chosen features may not generalize to unseen attack families."
+}

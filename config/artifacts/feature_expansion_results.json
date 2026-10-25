@@ -1,0 +1,80 @@
+{
+  "baseline_5_features": {
+    "features": [
+      "flow_duration",
+      "bytes_in",
+      "bytes_out",
+      "packets",
+      "dst_port"
+    ],
+    "training_rows": 184146,
+    "validation_rows": 43835,
+    "test_rows": 60000,
+    "validation_metrics": {
+      "threshold": 1.0,
+      "tn": 29734,
+      "fp": 266,
+      "fn": 13819,
+      "tp": 16,
+      "fpr": 0.008866666666666667,
+      "attack_recall": 0.0011564871702204554,
+      "attack_precision": 0.05673758865248227,
+      "attack_f1": 0.002266770560317348
+    },
+    "test_metrics": {
+      "threshold": 1.0,
+      "tn": 29928,
+      "fp": 72,
+      "fn": 29846,
+      "tp": 154,
+      "fpr": 0.0024,
+      "attack_recall": 0.0051333333333333335,
+      "attack_precision": 0.6814159292035398,
+      "attack_f1": 0.010189902732746642
+    }
+  },
+  "expanded_15_features": {
+    "features": [
+      "flow_duration",
+      "bytes_in",
+      "bytes_out",
+      "packets",
+      "dst_port",
+      "flow_iat_mean",
+      "flow_iat_std",
+      "syn_flag_count",
+      "ack_flag_count",
+      "flow_packets_s",
+      "flow_bytes_s",
+      "fwd_iat_mean",
+      "bwd_iat_mean",
+      "packet_length_mean",
+      "packet_length_std"
+    ],
+    "training_rows": 184146,
+    "validation_rows": 43835,
+    "test_rows": 60000,
+    "validation_metrics": {
+      "threshold": 0.28,
+      "tn": 29703,
+      "fp": 297,
+      "fn": 11825,
+      "tp": 2010,
+      "fpr": 0.0099,
+      "attack_recall": 0.1452837007589447,
+      "attack_precision": 0.871261378413524,
+      "attack_f1": 0.24903977202329328
+    },
+    "test_metrics": {
+      "threshold": 0.28,
+      "tn": 29840,
+      "fp": 160,
+      "fn": 8276,
+      "tp": 21724,
+      "fpr": 0.005333333333333333,
+      "attack_recall": 0.7241333333333333,
+      "attack_precision": 0.9926887223542314,
+      "attack_f1": 0.8374065222419242
+    }
+  }
+}
