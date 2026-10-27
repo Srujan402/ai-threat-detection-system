@@ -18,7 +18,7 @@ The system processes security events and network traffic data from CSV files, ev
 
 ## Application Screenshots
 
-> Replace the example filenames below with the exact names of your screenshot files.
+
 
 ### Security Dashboard
 
